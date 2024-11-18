@@ -1,0 +1,29 @@
+{
+    "name": "FilamentFcmDriver",
+    "alias": "filament-fcm-driver",
+    "description": {
+        "ar": "Firebase Cloud Messaging driver for Filament Alerts Sender",
+        "en": "Firebase Cloud Messaging driver for Filament Alerts Sender",
+        "gr": "Firebase Cloud Messaging driver for Filament Alerts Sender",
+        "sp": "Firebase Cloud Messaging driver for Filament Alerts Sender"
+    },
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "TomatoPHP\\FilamentFcmDriver\\FilamentFcmDriverServiceProvider"
+    ],
+    "files": [],
+    "title": {
+        "ar": "Filament fcm driver",
+        "en": "Filament fcm driver",
+        "gr": "Filament fcm driver",
+        "sp": "Filament fcm driver"
+    },
+    "color": "#cc1448",
+    "icon": "heroicon-c-users",
+    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/art/3x1io-tomato-fcm-driver.jpg",
+    "type": "plugin",
+    "version": "v1.0.0",
+    "github" : "https://github.com/tomatophp/filament-fcm-driver",
+    "docs" : "https://github.com/tomatophp/filament-fcm-driver"
+}
