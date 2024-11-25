@@ -1,12 +1,23 @@
-![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/art/3x1io-tomato-fcm-driver.jpg)
+![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/3x1io-tomato-fcm-driver.jpg)
 
 # Filament Firebase Cloud Messages Driver
 
+[![Dependabot Updates](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/dependabot/dependabot-updates)
+[![PHP Code Styling](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/fix-php-code-styling.yml)
+[![Tests](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/tests.yml/badge.svg)](https://github.com/tomatophp/filament-fcm-driver/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/tomatophp/filament-fcm-driver/version.svg)](https://packagist.org/packages/tomatophp/filament-fcm-driver)
 [![License](https://poser.pugx.org/tomatophp/filament-fcm-driver/license.svg)](https://packagist.org/packages/tomatophp/filament-fcm-driver)
 [![Downloads](https://poser.pugx.org/tomatophp/filament-fcm-driver/d/total.svg)](https://packagist.org/packages/tomatophp/filament-fcm-driver)
 
 Firebase Cloud Messaging driver for [Filament Alerts Sender](https://www.github.com/tomatophp/filament-alerts)
+
+## Screenshot
+
+![Preview](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/preview.png)
+![Setting Hub](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-hub.png)
+![Settings Part 1](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-p2.png)
+![Settings Part 2](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-p2.png)
+![Drivers](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/drivers.png)
 
 ## Installation
 
