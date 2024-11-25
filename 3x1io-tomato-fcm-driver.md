@@ -1,5 +1,5 @@
 ---
-name: FCM Driver
+name: Firebase Cloud Messages Driver
 slug: 3x1io-tomato-fcm-driver
 author_slug: 3x1io
 categories: [developer-tools]

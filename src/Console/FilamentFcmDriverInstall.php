@@ -3,11 +3,13 @@
 namespace TomatoPHP\FilamentFcmDriver\Console;
 
 use Illuminate\Console\Command;
+use TomatoPHP\ConsoleHelpers\Traits\HandleStub;
 use TomatoPHP\ConsoleHelpers\Traits\RunCommand;
 
 class FilamentFcmDriverInstall extends Command
 {
     use RunCommand;
+    use HandleStub;
 
     /**
      * The name and signature of the console command.
@@ -36,9 +38,22 @@ class FilamentFcmDriverInstall extends Command
      */
     public function handle()
     {
-        $this->info('Publish Vendor Assets');
-        $this->artisanCommand(["migrate"]);
-        $this->artisanCommand(["optimize:clear"]);
-        $this->info('Filament fcm driver installed successfully.');
+        $this->info('Install FCM Worker');
+        $this->generateStubs(
+            __DIR__ . '/../../stubs/firebase.stub',
+            public_path('firebase-messaging-sw.js'),
+            [
+                'apiKey' => config('filament-fcm-driver.project.apiKey'),
+                'authDomain' => config('filament-fcm-driver.project.authDomain'),
+                'databaseURL' => config('filament-fcm-driver.project.databaseURL'),
+                'projectId' => config('filament-fcm-driver.project.projectId'),
+                'storageBucket' => config('filament-fcm-driver.project.storageBucket'),
+                'messagingSenderId' => config('filament-fcm-driver.project.messagingSenderId'),
+                'appId' => config('filament-fcm-driver.project.appId'),
+                'measurementId' => config('filament-fcm-driver.project.measurementId'),
+                'sound' => config('filament-fcm-driver.alert.sound') ? "var audio = new Audio('".config('filament-fcm-driver.alert.sound')."');\n audio.play();": null
+            ]
+        );
+        $this->info('Filament FCM Driver installed successfully.');
     }
 }

@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use TomatoPHP\FilamentFcmDriver\Tests\Database\Factories\UserFactory;
+use TomatoPHP\FilamentFcmDriver\Traits\InteractsWithFcm;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasFactory;
+    use InteractsWithFcm;
     use Notifiable;
 
     protected $guarded = [];

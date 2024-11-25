@@ -10,6 +10,7 @@ providers:
   - Filament\Tables\TablesServiceProvider
   - Filament\Widgets\WidgetsServiceProvider
   - RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider
+  - TomatoPHP\FilamentAlerts\FilamentAlertsServiceProvider
   - TomatoPHP\FilamentFcmDriver\FilamentFcmDriverServiceProvider
   - TomatoPHP\FilamentFcmDriver\Tests\AdminPanelProvider
 workbench:
