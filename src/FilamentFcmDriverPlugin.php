@@ -9,7 +9,6 @@ use Filament\View\PanelsRenderHook;
 use TomatoPHP\FilamentAlerts\Facades\FilamentAlerts;
 use TomatoPHP\FilamentAlerts\Services\Concerns\NotificationDriver;
 use TomatoPHP\FilamentFcmDriver\Filament\Pages\FcmSettingsPage;
-use TomatoPHP\FilamentFcmDriver\Services\FcmDriver;
 use TomatoPHP\FilamentFcmDriver\Services\FcmMobileDriver;
 use TomatoPHP\FilamentFcmDriver\Services\FcmWebDriver;
 use TomatoPHP\FilamentSettingsHub\Facades\FilamentSettingsHub;
@@ -17,7 +16,6 @@ use TomatoPHP\FilamentSettingsHub\Services\Contracts\SettingHold;
 
 class FilamentFcmDriverPlugin implements Plugin
 {
-
     public function getId(): string
     {
         return 'filament-fcm-driver';
@@ -36,11 +34,10 @@ class FilamentFcmDriverPlugin implements Plugin
     {
         FilamentView::registerRenderHook(
             PanelsRenderHook::BODY_END,
-            function (){
+            function () {
                 return view('filament-fcm-driver::firebase');
             },
         );
-
 
         if (class_exists(FilamentSettingsHub::class) && filament('filament-alerts')->useSettingsHub) {
             FilamentSettingsHub::register([
@@ -60,7 +57,7 @@ class FilamentFcmDriverPlugin implements Plugin
                 ->driver(FcmMobileDriver::class),
             NotificationDriver::make('fcm-web')
                 ->label('Firebase Web')
-                ->driver(FcmWebDriver::class)
+                ->driver(FcmWebDriver::class),
         ]);
     }
 

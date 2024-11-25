@@ -10,15 +10,14 @@ use TomatoPHP\FilamentFcmDriver\Jobs\NotifyFCMJob;
 
 class FcmMobileDriver extends Driver
 {
-
     public function setup(): void
     {
         // TODO: Implement setup() method.
     }
 
-    public function sendIt(string $title, string $model, int|string|null $modelId = null, ?string $body = null, ?string $url = null, ?string $icon = null, ?string $image = null, ?string $type = 'info', ?string $action = 'system', ?array $data = [], ?int $template_id = null, ?Notification $notification=null): void
+    public function sendIt(string $title, string $model, int | string | null $modelId = null, ?string $body = null, ?string $url = null, ?string $icon = null, ?string $image = null, ?string $type = 'info', ?string $action = 'system', ?array $data = [], ?int $template_id = null, ?Notification $notification = null): void
     {
-        if($notification){
+        if ($notification) {
             $data = array_merge($data, [
                 'id' => $notification->getId(),
                 'actions' => json_encode($notification->getActions()),
@@ -33,8 +32,7 @@ class FcmMobileDriver extends Driver
                 'viewData' => json_encode($notification->getViewData()),
                 'data' => json_encode($data),
             ]);
-        }
-        else {
+        } else {
             $data = array_merge($data, [
                 'id' => Str::random(6),
                 'actions' => json_encode([]),
@@ -51,14 +49,14 @@ class FcmMobileDriver extends Driver
             ]);
         }
 
-        if($model && $modelId){
+        if ($model && $modelId) {
             $user = $model::find($modelId);
             $token = UserToken::query()
                 ->where('model_id', $modelId)
                 ->where('model_type', $model)
                 ->where('provider', 'fcm-mobile')
                 ->first();
-            if($token){
+            if ($token) {
                 dispatch(new NotifyFCMJob([
                     'user' => $user,
                     'title' => $title,
@@ -66,9 +64,9 @@ class FcmMobileDriver extends Driver
                     'icon' => $icon,
                     'image' => $image,
                     'url' => $url,
-                    'type' => "fcm-mobile",
+                    'type' => 'fcm-mobile',
                     'data' => $data,
-                    'sendToDatabase' => $data['sendToDatabase']??config('filament-fcm-driver.database.save', false)
+                    'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
                 ]));
             }
         }
