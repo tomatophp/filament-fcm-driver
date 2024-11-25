@@ -2,9 +2,9 @@
 
 namespace TomatoPHP\FilamentFcmDriver\Notifications;
 
+use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
-use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
 class FCMNotificationService extends Notification
@@ -16,21 +16,17 @@ class FCMNotificationService extends Notification
      */
     public function __construct(
         public string $message,
-        public ?string $type='fcm-web',
-        public ?string $title=null,
-        public ?string $icon=null,
-        public ?string $image=null,
-        public ?string $url=null,
-        public ?array $data=[],
-        public ?bool $sendToDatabase= true,
-    )
-    {}
+        public ?string $type = 'fcm-web',
+        public ?string $title = null,
+        public ?string $icon = null,
+        public ?string $image = null,
+        public ?string $url = null,
+        public ?array $data = [],
+        public ?bool $sendToDatabase = true,
+    ) {}
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @param mixed $notifiable
-     * @return array
      */
     public function via(mixed $notifiable): array
     {
@@ -39,7 +35,7 @@ class FCMNotificationService extends Notification
 
     public function toFcm($notifiable): FcmMessage
     {
-        return (
+        return
             new FcmMessage(
                 name: $this->data['id'],
                 topic: $this->type,
@@ -56,7 +52,7 @@ class FCMNotificationService extends Notification
                     'view' => $this->data['view'],
                     'viewData' => json_encode($this->data['viewData']),
                     'data' => json_encode($this->data['data']),
-                    'sendToDatabase' => (string)$this->sendToDatabase
+                    'sendToDatabase' => (string) $this->sendToDatabase,
                 ],
                 custom: [
                     'android' => [
@@ -78,7 +74,6 @@ class FCMNotificationService extends Notification
                     body: $this->message,
                     image: $this->image ?? null
                 )
-            )
-        );
+            );
     }
 }

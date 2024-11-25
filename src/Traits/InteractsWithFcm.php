@@ -2,26 +2,25 @@
 
 namespace TomatoPHP\FilamentFcmDriver\Traits;
 
-use TomatoPHP\FilamentFcmDriver\Jobs\NotifyFCMJob;
 use TomatoPHP\FilamentAlerts\Models\UserToken;
+use TomatoPHP\FilamentFcmDriver\Jobs\NotifyFCMJob;
 
 trait InteractsWithFcm
 {
-
     protected ?string $fcm;
+
     protected ?int $fcmId;
 
     public function notifyFirebase(
         string $message,
-        string $type='web',
-        ?string $title=null,
-        ?string $url=null,
-        ?string $image=null,
-        ?string $icon=null,
-        ?array $data=[],
+        string $type = 'web',
+        ?string $title = null,
+        ?string $url = null,
+        ?string $image = null,
+        ?string $icon = null,
+        ?array $data = [],
         bool $sendToDatabase = true
-    )
-    {
+    ) {
         dispatch(new NotifyFCMJob([
             'user' => $this,
             'title' => $title,
@@ -61,10 +60,11 @@ trait InteractsWithFcm
         return $this->id;
     }
 
-    public function setFCM(?string $type='fcm-web'): static
+    public function setFCM(?string $type = 'fcm-web'): static
     {
         $this->fcm = $type;
         $this->fcmId = $this->id;
+
         return $this;
     }
 

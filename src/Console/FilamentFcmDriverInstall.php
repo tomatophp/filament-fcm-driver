@@ -8,8 +8,8 @@ use TomatoPHP\ConsoleHelpers\Traits\RunCommand;
 
 class FilamentFcmDriverInstall extends Command
 {
-    use RunCommand;
     use HandleStub;
+    use RunCommand;
 
     /**
      * The name and signature of the console command.
@@ -29,7 +29,6 @@ class FilamentFcmDriverInstall extends Command
     {
         parent::__construct();
     }
-
 
     /**
      * Execute the console command.
@@ -51,7 +50,7 @@ class FilamentFcmDriverInstall extends Command
                 'messagingSenderId' => config('filament-fcm-driver.project.messagingSenderId'),
                 'appId' => config('filament-fcm-driver.project.appId'),
                 'measurementId' => config('filament-fcm-driver.project.measurementId'),
-                'sound' => config('filament-fcm-driver.alert.sound') ? "var audio = new Audio('".config('filament-fcm-driver.alert.sound')."');\n audio.play();": null
+                'sound' => config('filament-fcm-driver.alert.sound') ? "var audio = new Audio('" . config('filament-fcm-driver.alert.sound') . "');\n audio.play();" : null,
             ]
         );
         $this->info('Filament FCM Driver installed successfully.');

@@ -3,27 +3,38 @@
 namespace TomatoPHP\FilamentFcmDriver\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use TomatoPHP\FilamentAlerts\Models\NotificationsLogs;
 use TomatoPHP\FilamentFcmDriver\Notifications\FCMNotificationService;
 
 class NotifyFCMJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public ?Model $user;
+
     public ?string $title;
+
     public ?string $message;
+
     public ?string $image;
+
     public ?string $icon;
+
     public ?string $url;
+
     public ?string $type;
+
     public ?array $data;
+
     public ?bool $sendToDatabase = true;
 
     /**
@@ -35,13 +46,13 @@ class NotifyFCMJob implements ShouldQueue
     {
         $this->user = $arrgs['user'];
         $this->title = $arrgs['title'];
-        $this->message  = $arrgs['message'];
-        $this->icon  = $arrgs['icon'];
-        $this->url  = $arrgs['url'];
-        $this->image  = $arrgs['image'];
-        $this->type  = $arrgs['type'];
-        $this->data  = $arrgs['data'];
-        $this->sendToDatabase  = $arrgs['sendToDatabase'];
+        $this->message = $arrgs['message'];
+        $this->icon = $arrgs['icon'];
+        $this->url = $arrgs['url'];
+        $this->image = $arrgs['image'];
+        $this->type = $arrgs['type'];
+        $this->data = $arrgs['data'];
+        $this->sendToDatabase = $arrgs['sendToDatabase'];
     }
 
     /**
@@ -51,7 +62,7 @@ class NotifyFCMJob implements ShouldQueue
      */
     public function handle()
     {
-        $log = new NotificationsLogs();
+        $log = new NotificationsLogs;
         $log->title = $this->title;
         $log->description = $this->message;
         $log->provider = $this->type;
@@ -69,8 +80,7 @@ class NotifyFCMJob implements ShouldQueue
                 $this->data,
                 $this->sendToDatabase,
             ));
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
     }

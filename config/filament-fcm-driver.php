@@ -7,15 +7,15 @@ return [
      * ---------------------------------------------------------------
      *
      */
-    "project" => [
-        "apiKey"=> env("FIREBASE_API_KEY"),
-        "authDomain"=> env("FIREBASE_AUTH_DOMAIN"),
-        "databaseURL"=> env("FIREBASE_DATABASE_URL"),
-        "projectId"=> env("FIREBASE_PROJECT_ID"),
-        "storageBucket"=> env("FIREBASE_STORAGE_BUCKET"),
-        "messagingSenderId"=> env("FIREBASE_MESSAGING_SENDER_ID"),
-        "appId"=> env("FIREBASE_APP_ID"),
-        "measurementId" => env("FIREBASE_MEASUREMENT_ID"),
+    'project' => [
+        'apiKey' => env('FIREBASE_API_KEY'),
+        'authDomain' => env('FIREBASE_AUTH_DOMAIN'),
+        'databaseURL' => env('FIREBASE_DATABASE_URL'),
+        'projectId' => env('FIREBASE_PROJECT_ID'),
+        'storageBucket' => env('FIREBASE_STORAGE_BUCKET'),
+        'messagingSenderId' => env('FIREBASE_MESSAGING_SENDER_ID'),
+        'appId' => env('FIREBASE_APP_ID'),
+        'measurementId' => env('FIREBASE_MEASUREMENT_ID'),
     ],
 
     /*
@@ -24,7 +24,7 @@ return [
      * ---------------------------------------------------------------
      *
      */
-    "vapid" => env("FIREBASE_VAPID"),
+    'vapid' => env('FIREBASE_VAPID'),
 
     /*
      * ---------------------------------------------------------------
@@ -32,8 +32,8 @@ return [
      * ---------------------------------------------------------------
      *
      */
-    "alert" => [
-        "sound" => env("FCM_ALERT_SOUND"),
+    'alert' => [
+        'sound' => env('FCM_ALERT_SOUND'),
     ],
 
     /*
@@ -42,7 +42,7 @@ return [
      * ---------------------------------------------------------------
      *
      */
-    "database" => [
-        "save" => false
-    ]
+    'database' => [
+        'save' => false,
+    ],
 ];
