@@ -54,7 +54,6 @@
         "tomatophp/console-helpers": "^1.1",
         "mobiledetect/mobiledetectlib": "^4.8",
         "laravel-notification-channels/fcm": "^5.1",
-        "tomatophp/filament-alerts": "^2.2",
         "mallardduck/blade-boxicons": "^2.4"
     },
     "require-dev": {
