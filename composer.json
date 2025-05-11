@@ -53,8 +53,7 @@
         "filament/notifications": "^3.2",
         "tomatophp/console-helpers": "^1.1",
         "mobiledetect/mobiledetectlib": "^4.8",
-        "laravel-notification-channels/fcm": "^4.1",
-        "tomatophp/filament-alerts": "^2.2",
+        "laravel-notification-channels/fcm": "^5.1",
         "mallardduck/blade-boxicons": "^2.4"
     },
     "require-dev": {
@@ -69,5 +68,5 @@
        "phpstan/phpstan-deprecation-rules": "^1.2",
        "phpstan/phpstan-phpunit": "^1.4"
     },
-    "version": "v1.0.0"
+    "version": "v1.1.0"
 }
