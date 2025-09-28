@@ -67,7 +67,7 @@ class FcmMobileDriver extends Driver
                     'type' => 'fcm-mobile',
                     'data' => $data,
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                ]));
+                ]))->onQueue(config('filament-alerts.queue'));
             }
         }
     }

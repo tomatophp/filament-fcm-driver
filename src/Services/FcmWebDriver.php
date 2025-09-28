@@ -66,7 +66,7 @@ class FcmWebDriver extends Driver
                     'type' => 'fcm-web',
                     'data' => $data,
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                ]));
+                ]))->onQueue(config('filament-alerts.queue'));
             }
         }
     }
