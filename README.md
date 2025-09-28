@@ -1,4 +1,4 @@
-![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/3x1io-tomato-fcm-driver.jpg)
+![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/fadymondy-tomato-fcm-driver.jpg)
 
 # Filament Firebase Cloud Messages Driver
 

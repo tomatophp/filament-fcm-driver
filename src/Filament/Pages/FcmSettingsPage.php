@@ -2,22 +2,24 @@
 
 namespace TomatoPHP\FilamentFcmDriver\Filament\Pages;
 
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Get;
 use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Artisan;
 use TomatoPHP\FilamentFcmDriver\Settings\FcmSettings;
 use TomatoPHP\FilamentSettingsHub\Pages\SettingsHub;
 
 class FcmSettingsPage extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog';
+    protected static BackedEnum | null | string $navigationIcon = 'heroicon-o-cog';
 
     protected static string $settings = FcmSettings::class;
 
@@ -38,9 +40,9 @@ class FcmSettingsPage extends SettingsPage
         return false;
     }
 
-    protected function getFormSchema(): array
+    public function form(Schema $form): Schema
     {
-        return [
+        return $form->columns(1)->schema([
             Grid::make(['default' => 1])->schema([
                 Toggle::make('fcm_active')
                     ->live()
@@ -91,7 +93,7 @@ class FcmSettingsPage extends SettingsPage
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("fcm_alert_sound")' : null),
                     ]),
             ]),
-        ];
+        ]);
     }
 
     public function afterSave(): void

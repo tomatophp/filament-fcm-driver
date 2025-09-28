@@ -28,7 +28,7 @@ class FcmMobileDriver extends Driver
                 'iconColor' => $notification->getIconColor(),
                 'status' => $notification->getStatus(),
                 'title' => $notification->getTitle(),
-                'view' => $notification->getView(),
+                'view' => $notification->hasView() ? $notification->getView() : null,
                 'viewData' => json_encode($notification->getViewData()),
                 'data' => json_encode($data),
             ]);

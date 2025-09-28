@@ -4,7 +4,7 @@ use Filament\Facades\Filament;
 use TomatoPHP\FilamentFcmDriver\FilamentFcmDriverPlugin;
 
 it('registers plugin', function () {
-    $panel = Filament::getCurrentPanel();
+    $panel = Filament::getCurrentOrDefaultPanel();
 
     $panel->plugins([
         FilamentFcmDriverPlugin::make(),
