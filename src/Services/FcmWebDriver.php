@@ -52,6 +52,10 @@ class FcmWebDriver extends Driver
         }
         if ($model && $modelId) {
             $user = $model::find($modelId);
+            if (! $user) {
+                return;
+            }
+
             $token = UserToken::query()
                 ->where('model_id', $modelId)
                 ->where('model_type', $model)

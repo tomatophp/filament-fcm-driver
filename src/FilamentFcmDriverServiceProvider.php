@@ -3,8 +3,10 @@
 namespace TomatoPHP\FilamentFcmDriver;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use TomatoPHP\FilamentFcmDriver\Console\FilamentFcmDriverInstall;
 use TomatoPHP\FilamentFcmDriver\Livewire\Firebase;
 
 class FilamentFcmDriverServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class FilamentFcmDriverServiceProvider extends ServiceProvider
     {
         // Register generate command
         $this->commands([
-            \TomatoPHP\FilamentFcmDriver\Console\FilamentFcmDriverInstall::class,
+            FilamentFcmDriverInstall::class,
         ]);
 
         // Register Config file
@@ -57,20 +59,48 @@ class FilamentFcmDriverServiceProvider extends ServiceProvider
     public function boot(): void
     {
         try {
-            Config::set('filament-fcm-driver.project.apiKey', setting('fcm_project_apiKey'));
-            Config::set('filament-fcm-driver.project.authDomain', setting('fcm_project_authDomain'));
-            Config::set('filament-fcm-driver.project.databaseURL', setting('fcm_project_databaseURL'));
-            Config::set('filament-fcm-driver.project.projectId', setting('fcm_project_projectId'));
-            Config::set('filament-fcm-driver.project.storageBucket', setting('fcm_project_storageBucket'));
-            Config::set('filament-fcm-driver.project.messagingSenderId', setting('fcm_project_messagingSenderId'));
-            Config::set('filament-fcm-driver.project.appId', setting('fcm_project_appId'));
-            Config::set('filament-fcm-driver.project.measurementId', setting('fcm_project_measurementId'));
-            Config::set('filament-fcm-driver.vapid', setting('fcm_vapid'));
-            Config::set('filament-fcm-driver.alert.sound', setting('fcm_alert_sound'));
-            Config::set('firebase.projects.app.credentials', storage_path('/app/public/' . setting('fcm_credentials')));
-            Config::set('firebase.projects.app.database.url', setting('fcm_project_databaseURL'));
+            // Settings saved from the settings hub win over the env based config, empty settings keep the config value.
+            foreach ([
+                'filament-fcm-driver.project.apiKey' => 'fcm_project_apiKey',
+                'filament-fcm-driver.project.authDomain' => 'fcm_project_authDomain',
+                'filament-fcm-driver.project.databaseURL' => 'fcm_project_databaseURL',
+                'filament-fcm-driver.project.projectId' => 'fcm_project_projectId',
+                'filament-fcm-driver.project.storageBucket' => 'fcm_project_storageBucket',
+                'filament-fcm-driver.project.messagingSenderId' => 'fcm_project_messagingSenderId',
+                'filament-fcm-driver.project.appId' => 'fcm_project_appId',
+                'filament-fcm-driver.project.measurementId' => 'fcm_project_measurementId',
+                'filament-fcm-driver.vapid' => 'fcm_vapid',
+                'firebase.projects.app.database.url' => 'fcm_project_databaseURL',
+            ] as $config => $setting) {
+                $value = setting($setting);
+
+                if (filled($value)) {
+                    Config::set($config, $value);
+                }
+            }
+
+            $sound = setting('fcm_alert_sound');
+            if (filled($sound)) {
+                Config::set('filament-fcm-driver.alert.sound', Storage::disk('public')->url($sound));
+            }
+
+            $credentials = setting('fcm_credentials');
+            if (filled($credentials)) {
+                Config::set('firebase.projects.app.credentials', $this->credentialsPath($credentials));
+            }
         } catch (\Exception $e) {
             \Log::error($e);
         }
+    }
+
+    /**
+     * The service account key is uploaded to the private local disk; keys uploaded by
+     * older versions of the package live on the public disk.
+     */
+    protected function credentialsPath(string $credentials): string
+    {
+        $path = Storage::disk('local')->path($credentials);
+
+        return file_exists($path) ? $path : storage_path('app/public/' . $credentials);
     }
 }

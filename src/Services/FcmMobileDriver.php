@@ -53,6 +53,10 @@ class FcmMobileDriver extends Driver
 
         if ($model && $modelId) {
             $user = $model::find($modelId);
+            if (! $user) {
+                return;
+            }
+
             $token = UserToken::query()
                 ->where('model_id', $modelId)
                 ->where('model_type', $model)
@@ -69,7 +73,7 @@ class FcmMobileDriver extends Driver
                     'type' => 'fcm-mobile',
                     'data' => $data,
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                ]));
+                ]))->onQueue(config('filament-alerts.queue'));
             }
         } else {
             // Validate model is provided for bulk dispatch

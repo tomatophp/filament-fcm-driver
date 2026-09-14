@@ -13,17 +13,27 @@ Firebase Cloud Messaging driver for [Filament Alerts Sender](https://www.github.
 
 ## Screenshot
 
-![Preview](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/preview.png)
-![Setting Hub](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-hub.png)
-![Settings Part 1](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-p2.png)
-![Settings Part 2](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-p2.png)
-![Drivers](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/drivers.png)
+| Light | Dark |
+|-------|------|
+| ![Settings](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-light.png) | ![Settings](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-dark.png) |
+| ![Settings Hub](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-hub-light.png) | ![Settings Hub](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/settings-hub-dark.png) |
+| ![Drivers](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/drivers-light.png) | ![Drivers](https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/drivers-dark.png) |
+
+## Requirements
+
+| Package version | Filament | Laravel     | PHP  |
+|-----------------|----------|-------------|------|
+| 5.x             | 5.x      | 12.x, 13.x  | 8.2+ |
+| 4.x             | 4.x      | 11.x, 12.x  | 8.2+ |
 
 ## Installation
 
 ```bash
-composer require tomatophp/filament-fcm-driver
+composer require tomatophp/filament-fcm-driver -W
 ```
+
+> `-W` lets Composer upgrade Firebase dependencies your lock file already pins (for example `lcobucci/jwt` 4.x), which is what made the install fail in [#9](https://github.com/tomatophp/filament-fcm-driver/issues/9).
+
 after install your package please run this command
 
 ```bash
@@ -36,10 +46,10 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 ->plugin(\TomatoPHP\FilamentFcmDriver\FilamentFcmDriverPlugin::make())
 ```
 
-now you need to access Setting Hub page then go to Firebase options and then fill your data and save it. then please run this command to generate service worker file
+now you need to access Setting Hub page then go to Firebase options and then fill your data and save it. then run the install command again to generate the `public/firebase-messaging-sw.js` service worker file with your Firebase config
 
 ```bash
-php artisan filament-fcm:install
+php artisan filament-fcm-driver:install
 ```
 
 now on your User Model add this trait `InteractsWithFcm`

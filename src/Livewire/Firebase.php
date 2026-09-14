@@ -3,7 +3,7 @@
 namespace TomatoPHP\FilamentFcmDriver\Livewire;
 
 use Detection\MobileDetect;
-use Filament\Notifications\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -32,29 +32,7 @@ class Firebase extends Component
     #[On('fcm-notification')]
     public function fcmNotification(mixed $data)
     {
-        $actions = [];
-        if (isset($data['data'])) {
-            if (isset($data['data']['actions']) && is_object(json_decode($data['data']['actions']))) {
-                foreach (json_decode($data['data']['actions']) as $action) {
-                    $actions[] = Action::make($action->name)
-                        ->color($action->color)
-                        ->eventData($action->eventData)
-                        ->icon($action->icon)
-                        ->iconPosition($action->iconPosition)
-                        ->iconSize($action->iconSize)
-                        ->outlined($action->isOutlined)
-                        ->disabled($action->isDisabled)
-                        ->label($action->label)
-                        ->url($action->url)
-                        ->close($action->shouldClose)
-                        ->size($action->size)
-                        ->tooltip($action->tooltip)
-                        ->view($action->view)
-                        ->markAsUnread($action->shouldMarkAsUnRead ?? false)
-                        ->markAsRead($action->shouldMarkAsRead ?? false);
-                }
-            }
-        }
+        $actions = $this->actionsFrom($data['data']['actions'] ?? null);
 
         if (isset($data['data']['sendToDatabase']) && $data['data']['sendToDatabase'] === '1') {
             Notification::make($data['data']['id'])
@@ -78,6 +56,45 @@ class Firebase extends Component
                 ->duration($data['data']['duration'] ?? null)
                 ->send();
         }
+    }
+
+    /**
+     * Rebuild the notification actions sent in the push payload: either the serialized
+     * actions of a Filament notification (a JSON list) or a single `{"url": ...}` link.
+     *
+     * @return array<int, Action>
+     */
+    protected function actionsFrom(mixed $payload): array
+    {
+        $decoded = is_string($payload) ? json_decode($payload, true) : $payload;
+
+        if (! is_array($decoded) || $decoded === []) {
+            return [];
+        }
+
+        if (! array_is_list($decoded)) {
+            return filled($decoded['url'] ?? null)
+                ? [Action::make('view')->label(trans('filament-actions::view.single.label'))->url($decoded['url'])->markAsRead()]
+                : [];
+        }
+
+        $actions = [];
+
+        foreach ($decoded as $action) {
+            if (! is_array($action) || blank($action['name'] ?? null)) {
+                continue;
+            }
+
+            $actions[] = Action::make($action['name'])
+                ->label($action['label'] ?? $action['name'])
+                ->color($action['color'] ?? null)
+                ->icon($action['icon'] ?? null)
+                ->url($action['url'] ?? null)
+                ->markAsRead((bool) ($action['shouldMarkAsRead'] ?? false))
+                ->markAsUnread((bool) ($action['shouldMarkAsUnread'] ?? false));
+        }
+
+        return $actions;
     }
 
     public function render()

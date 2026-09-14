@@ -51,7 +51,12 @@ class FcmSettingsPage extends SettingsPage
                 Section::make(trans('filament-fcm-driver::messages.settings.fcm.google_settings'))
                     ->visible(fn (Get $get) => $get('fcm_active'))
                     ->schema([
+                        // The service account key must never be web accessible: keep it on the private local disk.
                         FileUpload::make('fcm_credentials')
+                            ->disk('local')
+                            ->directory('fcm')
+                            ->visibility('private')
+                            ->acceptedFileTypes(['application/json', 'text/plain'])
                             ->label(trans('filament-fcm-driver::messages.settings.fcm.fcm_credentials'))
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("fcm_credentials")' : null),
                     ]),
@@ -87,7 +92,12 @@ class FcmSettingsPage extends SettingsPage
                             ->columnSpanFull()
                             ->label(trans('filament-fcm-driver::messages.settings.fcm.fcm_vapid'))
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("fcm_vapid")' : null),
+                        // Played by the browser when a push arrives, so it needs a public URL.
                         FileUpload::make('fcm_alert_sound')
+                            ->disk('public')
+                            ->directory('fcm')
+                            ->visibility('public')
+                            ->acceptedFileTypes(['audio/*'])
                             ->columnSpanFull()
                             ->label(trans('filament-fcm-driver::messages.settings.fcm.fcm_alert_sound'))
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("fcm_alert_sound")' : null),

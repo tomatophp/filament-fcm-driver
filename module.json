@@ -21,9 +21,9 @@
     },
     "color": "#cc1448",
     "icon": "heroicon-c-users",
-    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/art/3x1io-tomato-fcm-driver.jpg",
+    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-fcm-driver/master/arts/fadymondy-tomato-fcm-driver.jpg",
     "type": "plugin",
-    "version": "v1.0.0",
+    "version": "v5.0.0",
     "github" : "https://github.com/tomatophp/filament-fcm-driver",
     "docs" : "https://github.com/tomatophp/filament-fcm-driver"
 }
