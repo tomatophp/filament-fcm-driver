@@ -35,7 +35,9 @@ class FcmMobileDriver extends Driver
         } else {
             $data = array_merge($data, [
                 'id' => Str::random(6),
-                'actions' => json_encode([]),
+                'actions' => json_encode([
+                    'url' => $url,
+                ]),
                 'body' => $body,
                 'color' => null,
                 'duration' => null,
@@ -67,8 +69,48 @@ class FcmMobileDriver extends Driver
                     'type' => 'fcm-mobile',
                     'data' => $data,
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                ]))->onQueue(config('filament-alerts.queue'));
+                ]));
             }
+        } else {
+            // Validate model is provided for bulk dispatch
+            if (! $model) {
+                return;
+            }
+
+            // Get all user tokens of this model type in one query
+            $tokens = UserToken::query()
+                ->where('provider', 'fcm-mobile')
+                ->where('model_type', $model)
+                ->get(['model_id']); // only need the IDs
+
+            if ($tokens->isEmpty()) {
+                return;
+            }
+
+            // Collect all user IDs
+            $userIds = $tokens->pluck('model_id')->unique();
+
+            // Fetch users in one go
+            $users = $model::query()
+                ->whereIn('id', $userIds)
+                ->get();
+
+            foreach ($users as $user) {
+                dispatch(new NotifyFCMJob([
+                    'user' => $user,
+                    'title' => $title,
+                    'message' => $body,
+                    'icon' => $icon,
+                    'image' => $image,
+                    'url' => $url,
+                    'type' => 'fcm-mobile',
+                    'data' => $data,
+                    'sendToDatabase' => $data['sendToDatabase']
+                        ?? config('filament-fcm-driver.database.save', false),
+                ]))
+                    ->onQueue(config('filament-alerts.queue'));
+            }
+
         }
     }
 }
