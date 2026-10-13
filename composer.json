@@ -2,6 +2,12 @@
     "name": "tomatophp/filament-fcm-driver",
     "type": "library",
     "description": "Firebase Cloud Messaging driver for Filament Alerts Sender",
+    "homepage": "https://tomatophp.com/en/plugins/filament-fcm-driver",
+    "support": {
+        "issues": "https://github.com/tomatophp/filament-fcm-driver/issues",
+        "source": "https://github.com/tomatophp/filament-fcm-driver",
+        "docs": "https://tomatophp.com/en/plugins/filament-fcm-driver"
+    },
     "keywords": [
         "php",
         "laravel",
